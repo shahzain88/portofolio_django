@@ -1,0 +1,83 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bad way of calling static files -->
+    <!-- <link rel="stylesheet" href="/static/styles.css"> -->
+    <link rel="stylesheet" href="{%static 'styles.css'%}">
+
+    <title>articles</title>
+</head>
+
+<body>
+    <div class="wrepper">
+        <header>
+            <h1><a href="{% url 'home:list'%}"><img src="{%static 'logo.png'%}"></a></h1>
+
+            <nav>
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <form class="logout-link" action="{%url 'accounts:logout'%}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">LogOut</button>
+                        </form>
+                    </li>
+                    <li>
+                        <a href="{%url 'articles:create'%}" class="highlight">New Article</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'contact:view_list'%}" class="highlight">View Contact</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="{%url 'accounts:login'%}">LogIn</a>
+                    </li>
+                    <li>
+                        <a href="{%url 'accounts:signup'%}">SignUp</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+        </header>
+        <nav class="banner">
+            <ul>
+                <a href="{% url 'home:list' %}">
+                    <li>ホーム</li>
+                </a>
+                <a href="{% url 'gaiyou:list' %}">
+                    <li>会社概要</li>
+                </a>
+                <a href="{% url 'shoukai:list' %}">
+                    <li>事業紹介</li>
+                </a>
+                <a href="{% url 'articles:list' %}">
+                    <li>事例紹介</li>
+                </a>
+                <a href="{% url 'QandA:list' %}">
+                    <li>ご質問</li>
+                </a>
+                <a href="{% url 'contact:create_list' %}">
+                    <li>お問い合わせ</li>
+                </a>
+                <a href="{% url 'privacy:list' %}">
+                    <li>プライバシーポリシ</li>
+                </a>
+                <a href="{% url 'recruitment:list' %}">
+                    <li>採用情報</li>
+                </a>
+            </ul>
+        </nav>
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+    <script src="{%static 'app.js'%}"></script>
+</body>
+
+</html>
